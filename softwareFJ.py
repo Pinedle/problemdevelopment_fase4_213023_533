@@ -255,4 +255,199 @@ class Servicio(EntidadBase):
                 # Reutiliza la descripción específica implementada por cada subclase.
                 return self.describir()
 
-            
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# PUNTO 4: CLASE RESERVA - La reserva integra cliente y servicio, y maneja su propio estado. Implementa cancelación y confirmación, y el cálculo de costos finales con manejo de errores. --
+# Autor: Luis Ángel Padilla                                                                                                                                                               --
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Nota: esta clase usa registrar_evento() y registrar_error(), que se definen en el PUNTO 6 (archivo de logs). Esto permite que cada reserva deje regitros, tanto de éxito como de error.
+
+
+# Se define la clase Reserva, que hereda de Entidad.
+class Reserva(Entidad):
+    """
+    Une a un cliente con un servicio durante cierta cantidad de horas.
+    Maneja su propio estado: PENDIENTE -> CONFIRMADA o CANCELADA.
+    """
+
+    PENDIENTE = "PENDIENTE"
+    CONFIRMADA = "CONFIRMADA"
+    CANCELADA = "CANCELADA"
+
+    # El constructor recibe un cliente, un servicio y la cantidad de horas.
+    def __init__(self, cliente, servicio, horas):
+        super().__init__()
+        # Validar que lo recibido sea del tipo correcto.
+        if not isinstance(cliente, Cliente):
+            raise ReservaInvalidaError("La reserva necesita un cliente válido")
+        if not isinstance(servicio, Servicio):
+            raise ReservaInvalidaError("La reserva necesita un servicio válido")
+        self._cliente = cliente
+        self._servicio = servicio
+        self._horas = horas
+        self._estado = self.PENDIENTE
+
+    # Se definen propiedades de solo lectura para cliente, servicio, horas y estado.
+    @property
+    def estado(self):
+        return self._estado
+
+    # Se define el método confirmar(), que pasa la reserva a CONFIRMADA si todo está en orden. Si la reserva no está en estado PENDIENTE, o si el servicio no está disponible, o si los parámetros de horas no son válidos, se lanza una excepción.
+    def confirmar(self):
+        """Pasa la reserva a CONFIRMADA si todo está en orden."""
+        if self._estado != self.PENDIENTE:
+            raise ReservaInvalidaError(
+                f"No se puede confirmar una reserva en estado {self._estado}"
+            )
+        if not self._servicio.disponible:
+            raise ServicioNoDisponibleError(
+                f"El servicio '{self._servicio.nombre}' no está disponible"
+            )
+        self._servicio.validar_parametros(self._horas)
+        self._estado = self.CONFIRMADA
+
+    # Se define el método cancelar(), que pasa la reserva a CANCELADA si no estaba ya cancelada. Si la reserva ya estaba en estado CANCELADA, se lanza una excepción.
+    def cancelar(self):
+        """Cancela la reserva (solo si no estaba ya cancelada)."""
+        if self._estado == self.CANCELADA:
+            raise ReservaInvalidaError("La reserva ya estaba cancelada")
+        self._estado = self.CANCELADA
+
+    # Se define el método procesar(), que confirma la reserva y calcula su costo final. Este método maneja errores usando try-except-else-finally, registrando eventos y errores en un archivo de log.
+    def procesar(self, impuesto=0.19, descuento=None):
+        """
+        Confirma la reserva y calcula su costo final. Aquí se muestran
+        los bloques de manejo de errores que pide la guía:
+            try      -> lo que intentamos hacer
+            except   -> qué hacemos si algo falla
+            else     -> qué hacemos si TODO salió bien
+            finally  -> lo que pase lo que pase siempre se ejecuta
+        """
+        costo = None
+        try:
+            self.confirmar()
+            costo = self._servicio.calcular_costo_total(
+                self._horas, impuesto, descuento
+            )
+        except SoftwareFJError as error:
+            # Encadenamiento: envolvemos el error original en uno de
+            # reserva, pero "from error" conserva la causa real.
+            registrar_error(
+                f"Reserva #{self.id} falló al procesarse: {error}", error
+            )
+            raise ReservaInvalidaError(
+                f"No se pudo procesar la reserva #{self.id}"
+            ) from error
+        else:
+            registrar_evento(
+                f"Reserva #{self.id} confirmada para {self._cliente.nombre} "
+                f"| {self._servicio.nombre} | {self._horas}h | total ${costo:,.2f}"
+            )
+            return costo
+        finally:
+            # Se ejecuta siempre: éxito o error.
+            registrar_evento(
+                f"Fin del procesamiento de la reserva #{self.id} "
+                f"(estado: {self._estado})"
+            )
+    # Se define el método describir(), que devuelve una cadena con la información de la reserva, incluyendo su id, cliente, servicio, horas y estado.
+    def describir(self):
+        return (f"Reserva #{self.id} | {self._cliente.nombre} -> "
+                f"{self._servicio.nombre} | {self._horas}h | {self._estado}")
+
+
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# PUNTO 5: MÉTODOS SOBRECARGADOS - Se implementa la clase CalculadoraCostos con un método estático "calcular" que permite calcular el costo final de un servicio considerando base,     --
+# impuesto, descuento y cargo extra. Se manejan errores de parámetros inválidos y cálculos inconsistentes.                                                                              --
+# Autor: Luis Ángel Padilla                                                                                                                                                             --
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# Python no tiene sobrecarga "real" como Java, pero se logra con
+# parámetros opcionales: el MISMO método se puede llamar de varias
+# formas y se comporta distinto según lo que le pases.
+
+# Se define la clase CalculadoraCostos, que agrupa las distintas variantes para calcular un costo final.
+class CalculadoraCostos:
+    """Agrupa las distintas variantes para calcular un costo final."""
+
+    @staticmethod
+    def calcular(base, impuesto=None, descuento=None, cargo_extra=0.0):
+        """
+        Variantes de uso:
+            calcular(100)                  -> solo el valor base
+            calcular(100, 0.19)            -> base + IVA
+            calcular(100, 0.19, 0.10)      -> base - descuento + IVA
+            calcular(100, 0.19, 0.10, 20)  -> lo anterior + cargo extra
+        """
+        if base is None or not isinstance(base, (int, float)):
+            raise ParametroInvalidoError("Falta el valor base del cálculo")
+        if base < 0:
+            raise CalculoInconsistenteError("El costo base no puede ser negativo")
+
+        total = float(base)
+
+        # Si nos dieron descuento, se aplica primero.
+        if descuento is not None:
+            if not 0 <= descuento <= 1:
+                raise ParametroInvalidoError(
+                    "El descuento debe estar entre 0 y 1 (ej: 0.10 = 10%)"
+                )
+            total -= total * descuento
+
+        # Luego el impuesto, si lo pidieron.
+        if impuesto is not None:
+            if not 0 <= impuesto <= 1:
+                raise ParametroInvalidoError(
+                    "El impuesto debe estar entre 0 y 1 (ej: 0.19 = 19%)"
+                )
+            total += total * impuesto
+
+        total += cargo_extra
+
+        # Revisión final de sanidad: un total negativo no es lógico.
+        if total < 0:
+            raise CalculoInconsistenteError(
+                f"El total quedó negativo ({total:.2f})"
+            )
+        return round(total, 2)
+
+
+#--------------------------------------------------------------------------------------------------------------------------------
+# PUNTO 6: ARCHIVO DE LOGS - Se crea un archivo de registro en la carpeta "logs" para registrar eventos y errores del sistema. --
+# Autor: Luis Ángel Padilla                                                                                                    --      
+#--------------------------------------------------------------------------------------------------------------------------------
+
+
+CARPETA_LOGS = Path(__file__).resolve().parent / "logs"
+CARPETA_LOGS.mkdir(exist_ok=True)          # si no existe, la crea
+ARCHIVO_LOG = CARPETA_LOGS / "software_fj.log"
+
+# Un "logger" es el objeto que usaremos para escribir mensajes.
+logger = logging.getLogger("SoftwareFJ")
+logger.setLevel(logging.DEBUG)
+
+if not logger.handlers:                     # evita duplicar mensajes
+    # El handler decide A DÓNDE van los mensajes: aquí, a un archivo.
+    # mode="a" significa "append": agrega al final, no borra lo anterior.
+    manejador = logging.FileHandler(ARCHIVO_LOG, mode="a", encoding="utf-8")
+    # El formato define cómo se ve cada línea: fecha, nivel y mensaje.
+    manejador.setFormatter(
+        logging.Formatter("%(asctime)s | %(levelname)-8s | %(message)s")
+    )
+    logger.addHandler(manejador)
+
+
+def registrar_evento(mensaje):
+    """Guarda un evento normal (algo que salió bien) en el log."""
+    logger.info(mensaje)
+
+
+def registrar_error(mensaje, excepcion=None):
+    """
+    Guarda un error en el log. Si recibe la excepción, también deja
+    registrada la causa original (por si hubo encadenamiento).
+    """
+    if excepcion is not None and excepcion.__cause__ is not None:
+        mensaje += f" | causa original: {excepcion.__cause__!r}"
+    logger.error(mensaje)
