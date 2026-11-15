@@ -1,3 +1,17 @@
+'''
+UNAD:       Universidad Nacional Abierta y a Distancia
+ECBTI:      Escuela de Ciencias Básicas Tecnología e Ingeniería
+Curso:      Programación
+Grupo:      213023_533
+Programa:   Ingeniería de Sistemas
+
+Actividad Fase 2 - Diseño y Programación Orientada a Objetos
+Autores: Lenyn Estéban Lozano, Luís Ángel Padilla Soto
+Versión: 1.0
+Fecha de Actualización: 14 de septiembre de 2026
+'''
+
+
 import logging
 import os
 import re
