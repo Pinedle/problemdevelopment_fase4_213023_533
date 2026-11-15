@@ -20,30 +20,46 @@ from datetime import datetime
 from itertools import count
 import tkinter as tkinter
 from tkinter import messagebox, tkinter
+from zipfile import Path
 
 
 #Se incluyen las excepciones personalizadas
 
 # Permiten distinguir los errores del dominio de los errores generales de Python.
 class SoftwareFJError(Exception):
+    pass
 
 
 class ClienteInvalidoError(SoftwareFJError):
+    pass
 
 
 class ServicioInvalidoError(SoftwareFJError):
+    pass
 
 
 class ParametroFaltanteError(SoftwareFJError):
+    pass
 
 
 class ServicioNoDisponibleError(SoftwareFJError):
+    pass
 
 
 class CalculoInconsistenteError(SoftwareFJError):
+    pass
 
 
 class OperacionNoPermitidaError(SoftwareFJError):
+    pass
+
+
+class ParametroInvalidoError(SoftwareFJError):
+    pass
+
+
+class ReservaInvalidaError(SoftwareFJError):
+    pass
 
  
 #El logger que es para los archivos de logs
@@ -63,9 +79,9 @@ if not logger.handlers:
 class EntidadBase(ABC):
 
 # El contador compartido asigna identificadores consecutivos a todas las entidades.
-_contador_id = count(1)
+ _contador_id = count(1)
 
-def __init__(self)
+def __init__(self):
     self._id = next(EntidadBase._contador)
     self._fecha_creacion = datetime.now()
 
@@ -92,7 +108,7 @@ _RE_NOMBRE = re.compile(r"^[A-Za-zÁÉÍÓÚáéíóúÑñÚú]+([A-Za-zÁÉÍÓ
 
 
 class Cliente(EntidadBase):
-    def__init__(self, nombre, documento, correo, telefono):
+    def __init__(self, nombre, documento, correo, telefono):
         super().__init__()
         try:
             # La asignación mediante propiedades centraliza la validación de cada dato.
@@ -100,7 +116,7 @@ class Cliente(EntidadBase):
             self.documento = documento
             self.correo = correo
             self.telefono = telefono
-        except clienteInvalidoError as e:
+        except ClienteInvalidoError as e:
             logger.error("Fallo al crear el cliente: %s", e)
             raise
         else:
@@ -119,10 +135,10 @@ class Cliente(EntidadBase):
         
         @nombre.setter
         def nombre(self, valor):
-           try:
+            try:
                 valor = self._requerido(valor, "nombre")
                 if not isinstance(valor, str) or not _RE_NOMBRE.match(valor.strip()) or len(valor.strip()) < 3:
-                    raise valueError(f"Nombre invalido: {valor!r}")
+                    raise ValueError(f"Nombre invalido: {valor!r}")
             except (ParametroFaltanteError, ValueError) as e:
                raise ClienteInvalidoError(f"Nombre del cliente invalido") from e
             self._nombre = valor.strip().title()
@@ -241,13 +257,13 @@ class Servicio(EntidadBase):
                     self.verificar_disponible()
                     self.validar_parametros(duracion)
                     if not 0 <= impuesto <= 1 or not 0 <= descuento <= 1:
-                        raise CalculoInsconsistenteError(f"Impuesto debe estar entre 0 y 1")
+                        raise CalculoInconsistenteError(f"Impuesto debe estar entre 0 y 1")
                     # El descuento reduce el costo base y luego se aplica el impuesto.
                     total = self._costo_base(duracion) * (1 - descuento) * (1 + impuesto)
                     if total < 0:
-                        raise CalculoInsconsistenteError(f"El costo calculado no es valido: {total}")
+                        raise CalculoInconsistenteError(f"El costo calculado no es valido: {total}")
                     
-                except (ServicioInvalidoError, ServicioNoDisponibleError, CalculoInsconsistenteError) as e:
+                except (ServicioInvalidoError, ServicioNoDisponibleError, CalculoInconsistenteError) as e:
                     logger.error("Error al calcular el costo de'%s': %s", self.nombre, e)
                     raise
                 else:
@@ -278,7 +294,8 @@ class Servicio(EntidadBase):
 
 
 # Se define la clase Reserva, que hereda de Entidad.
-class Reserva(Entidad):
+class Reserva(EntidadBase):
+    
     """
     Une a un cliente con un servicio durante cierta cantidad de horas.
     Maneja su propio estado: PENDIENTE -> CONFIRMADA o CANCELADA.
