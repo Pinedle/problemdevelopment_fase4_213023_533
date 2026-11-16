@@ -1,0 +1,71 @@
+2026-11-15 09:50:34,693 | INFO     | Cliente creado exitosamente: Ana (Doc: 123456)
+2026-11-15 09:50:34,693 | ERROR    | Fallo al crear el cliente: Correo del cliente invalido
+2026-11-15 09:51:24,779 | INFO     | Cliente creado exitosamente: Ana (Doc: 123456)
+2026-11-15 09:51:24,785 | ERROR    | Fallo al crear el cliente: Correo del cliente invalido
+2026-11-15 10:04:40,239 | ERROR    | Fallo al crear el cliente: Nombre del cliente invalido
+2026-11-15 19:33:09,353 | INFO     | Cliente creado exitosamente: Maria (Doc: 12345678)
+2026-11-15 19:33:23,478 | INFO     | Cliente creado exitosamente: Maria (Doc: 12345678)
+2026-11-15 19:33:23,478 | INFO     | Service created: Sala 'Sala A' - capacidad 10 personas, Proyector: No, $20,000/hora
+2026-11-15 19:33:23,479 | INFO     | Service created: Equipo 'Camara' (Camara) - $1,000/día, seguro: Sí
+2026-11-15 19:33:23,479 | INFO     | Service created: Asesoría 'Consultoria' en Sistemas - nivel senior, $30,000/hora
+2026-11-15 19:33:23,479 | INFO     | Costo 'Sala A' (2): 42840.00
+2026-11-15 19:33:23,480 | INFO     | Cálculo de costo finalizado para 'Sala A'
+2026-11-15 19:33:23,480 | INFO     | Costo 'Camara' (2): 2100.00
+2026-11-15 19:33:23,480 | INFO     | Cálculo de costo finalizado para 'Camara'
+2026-11-15 19:33:23,480 | INFO     | Costo 'Consultoria' (2): 90000.00
+2026-11-15 19:33:23,480 | INFO     | Cálculo de costo finalizado para 'Consultoria'
+2026-11-15 19:33:34,912 | INFO     | Cliente creado exitosamente: Maria (Doc: 12345678)
+2026-11-15 19:33:34,912 | INFO     | Service created: Sala 'Sala A' - capacidad 10 personas, Proyector: No, $20,000/hora
+2026-11-15 19:33:34,912 | INFO     | Service created: Equipo 'Camara' (Camara) - $1,000/día, seguro: Sí
+2026-11-15 19:33:34,913 | INFO     | Service created: Asesoría 'Consultoria' en Sistemas - nivel senior, $30,000/hora
+2026-11-15 19:33:34,913 | INFO     | Costo 'Sala A' (2): 42840.00
+2026-11-15 19:33:34,913 | INFO     | Cálculo de costo finalizado para 'Sala A'
+2026-11-15 19:33:34,913 | INFO     | Costo 'Camara' (2): 2100.00
+2026-11-15 19:33:34,913 | INFO     | Cálculo de costo finalizado para 'Camara'
+2026-11-15 19:33:34,913 | INFO     | Costo 'Consultoria' (2): 90000.00
+2026-11-15 19:33:34,914 | INFO     | Cálculo de costo finalizado para 'Consultoria'
+2026-11-15 19:33:34,914 | INFO     | Costo 'Sala A' (2): 42840.00
+2026-11-15 19:33:34,914 | INFO     | Cálculo de costo finalizado para 'Sala A'
+2026-11-15 19:33:34,914 | INFO     | Reserva #5 confirmada para Maria | Sala A | 2h | total $42,840.00
+2026-11-15 19:33:34,914 | INFO     | Fin del procesamiento de la reserva #5 (estado: CONFIRMADA)
+2026-11-15 19:33:47,032 | INFO     | Cliente creado exitosamente: Maria (Doc: 12345678)
+2026-11-15 19:33:47,033 | INFO     | Service created: Sala 'Sala A' - capacidad 10 personas, Proyector: No, $20,000/hora
+2026-11-15 19:33:47,033 | INFO     | Service created: Equipo 'Camara' (Camara) - $1,000/día, seguro: Sí
+2026-11-15 19:33:47,033 | INFO     | Service created: Asesoría 'Consultoria' en Sistemas - nivel senior, $30,000/hora
+2026-11-15 19:33:47,033 | INFO     | Costo 'Sala A' (2): 42840.00
+2026-11-15 19:33:47,033 | INFO     | Cálculo de costo finalizado para 'Sala A'
+2026-11-15 19:33:47,035 | INFO     | Costo 'Camara' (2): 2100.00
+2026-11-15 19:33:47,036 | INFO     | Cálculo de costo finalizado para 'Camara'
+2026-11-15 19:33:47,036 | INFO     | Costo 'Consultoria' (2): 90000.00
+2026-11-15 19:33:47,036 | INFO     | Cálculo de costo finalizado para 'Consultoria'
+2026-11-15 19:33:47,036 | INFO     | Costo 'Sala A' (2): 42840.00
+2026-11-15 19:33:47,036 | INFO     | Cálculo de costo finalizado para 'Sala A'
+2026-11-15 19:33:47,036 | INFO     | Reserva #5 confirmada para Maria | Sala A | 2h | total $42,840.00
+2026-11-15 19:33:47,036 | INFO     | Fin del procesamiento de la reserva #5 (estado: CONFIRMADA)
+2026-11-15 19:33:47,424 | INFO     | Application started
+2026-11-15 19:34:10,944 | INFO     | Cliente creado exitosamente: Maria Lopez (Doc: 12345678)
+2026-11-15 19:34:10,945 | INFO     | Service created: Sala 'Sala A' - capacidad 10 personas, Proyector: No, $20,000/hora
+2026-11-15 19:34:10,945 | INFO     | Service created: Equipo 'Camara' (Camara) - $1,000/día, seguro: Sí
+2026-11-15 19:34:10,946 | INFO     | Service created: Asesoría 'Consultoria' en Sistemas - nivel senior, $30,000/hora
+2026-11-15 19:34:10,946 | INFO     | Costo 'Sala A' (2): 42840.00
+2026-11-15 19:34:10,946 | INFO     | Cálculo de costo finalizado para 'Sala A'
+2026-11-15 19:34:10,946 | INFO     | Costo 'Camara' (2): 2100.00
+2026-11-15 19:34:10,946 | INFO     | Cálculo de costo finalizado para 'Camara'
+2026-11-15 19:34:10,946 | INFO     | Costo 'Consultoria' (2): 90000.00
+2026-11-15 19:34:10,947 | INFO     | Cálculo de costo finalizado para 'Consultoria'
+2026-11-15 19:34:10,947 | ERROR    | Error al calcular el costo de 'Sala A': El impuesto debe estar entre 0 y 1
+2026-11-15 19:34:10,947 | INFO     | Cálculo de costo finalizado para 'Sala A'
+2026-11-15 19:34:10,947 | ERROR    | Reserva #5 falló al procesarse: El impuesto debe estar entre 0 y 1
+2026-11-15 19:34:10,947 | INFO     | Fin del procesamiento de la reserva #5 (estado: PENDIENTE)
+2026-11-15 19:34:10,947 | INFO     | Costo 'Sala A' (2): 42840.00
+2026-11-15 19:34:10,947 | INFO     | Cálculo de costo finalizado para 'Sala A'
+2026-11-15 19:34:10,947 | INFO     | Reserva #5 confirmada para Maria Lopez | Sala A | 2h | total $42,840.00
+2026-11-15 19:34:10,948 | INFO     | Fin del procesamiento de la reserva #5 (estado: CONFIRMADA)
+2026-11-15 19:34:11,215 | INFO     | Application started
+2026-11-15 19:34:32,881 | INFO     | Application started
+2026-11-15 19:34:32,906 | INFO     | Service created: Sala 'Sala de prueba' - capacidad 10 personas, Proyector: No, $20,000/hora
+2026-11-15 19:34:32,908 | INFO     | Costo 'Sala de prueba' (2): 40000.00
+2026-11-15 19:34:32,908 | INFO     | Cálculo de costo finalizado para 'Sala de prueba'
+2026-11-15 19:34:32,909 | INFO     | Costo 'Sala de prueba' (2): 40000.00
+2026-11-15 19:34:32,909 | INFO     | Cálculo de costo finalizado para 'Sala de prueba'
+2026-11-15 19:35:05,749 | INFO     | Application started
