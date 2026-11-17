@@ -1,2 +1,37 @@
-# Auto detect text files and perform LF normalization
+# Configuración de finales de línea
 * text=auto
+
+# Código y documentación: finales LF consistentes
+*.py text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.rst text eol=lf
+
+# Archivos de configuración y datos de texto
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.toml text eol=lf
+*.ini text eol=lf
+*.cfg text eol=lf
+*.csv text eol=lf
+
+# Scripts de Windows
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Archivos binarios
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.7z binary
+*.xlsx binary
+*.xls binary
+*.db binary
+*.sqlite binary
+*.sqlite3 binary

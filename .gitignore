@@ -1,0 +1,47 @@
+# Python: archivos compilados y caché
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+ENV/
+
+# Logs generados por Software FJ
+logs/*.log
+logs/*.log.*
+!logs/.gitkeep
+
+# Archivos temporales y de respaldo
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+~*
+
+# Variables de entorno y secretos
+.env
+.env.*
+!.env.example
+
+# Herramientas de desarrollo
+.vscode/
+.idea/
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Distribución de Python (por si se empaqueta en el futuro)
+build/
+dist/
+*.egg-info/
