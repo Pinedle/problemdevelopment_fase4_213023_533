@@ -5,7 +5,7 @@ Curso:      Programación
 Grupo:      213023_533
 Programa:   Ingeniería de Sistemas
 
-Actividad Reto 4 - Argumentación de soluciones con espacios vectoriales e independiente lineal 
+Actividad Reto 4 - Componente Practico - simuladas
 Autores: Lenyn Esteban Lozano, Luís Ángel Padilla Soto
 Versión: 1.0
 Fecha de Actualización: 17 de noviembre de 2026
