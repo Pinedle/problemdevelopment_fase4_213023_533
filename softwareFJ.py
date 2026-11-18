@@ -8,7 +8,7 @@ Programa:   Ingeniería de Sistemas
 Actividad Reto 4 - Argumentación de soluciones con espacios vectoriales e independiente lineal 
 Autores: Lenyn Esteban Lozano, Luís Ángel Padilla Soto
 Versión: 1.0
-Fecha de Actualización: 14 de septiembre de 2026
+Fecha de Actualización: 17 de noviembre de 2026
 '''
 
 
