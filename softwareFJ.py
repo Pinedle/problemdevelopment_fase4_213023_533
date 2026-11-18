@@ -5,8 +5,8 @@ Curso:      Programación
 Grupo:      213023_533
 Programa:   Ingeniería de Sistemas
 
-Actividad Fase 4 - Diseño y Programación Orientada a Objetos
-Autores: Lenyn Estéban Lozano, Luís Ángel Padilla Soto
+Actividad Reto 4 - Argumentación de soluciones con espacios vectoriales e independiente lineal 
+Autores: Lenyn Esteban Lozano, Luís Ángel Padilla Soto
 Versión: 1.0
 Fecha de Actualización: 14 de septiembre de 2026
 '''
